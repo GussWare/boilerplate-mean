@@ -1,0 +1,59 @@
+{
+	"name": "boilerplate-mean",
+	"version": "1.0.0",
+	"description": "Boilerplate para proyectos MEAN (Mongo, Express, Angular y Node)",
+	"main": "index.js",
+	"scripts": {
+		"serve": "node build/index.js",
+		"start": "npm run dev",
+		"dev": "nodemon --exec babel-node src/index.js",
+		"build": "babel --plugins @babel/plugin-transform-modules-commonjs src/ --out-dir build",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"boilerplate",
+		"mongo",
+		"express",
+		"angular",
+		"node"
+	],
+	"author": "GussWare",
+	"license": "ISC",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.19.0",
+		"compression": "^1.7.4",
+		"cors": "^2.8.5",
+		"cross-env": "^7.0.3",
+		"dotenv": "^9.0.2",
+		"express": "^4.17.1",
+		"express-fileupload": "^1.2.1",
+		"express-mongo-sanitize": "^2.1.0",
+		"express-rate-limit": "^5.2.6",
+		"fs-extra": "^10.0.0",
+		"helmet": "^4.6.0",
+		"http-status": "^1.5.0",
+		"joi": "^17.4.0",
+		"jsonwebtoken": "^8.5.1",
+		"moment": "^2.29.1",
+		"mongoose": "^5.12.8",
+		"morgan": "^1.10.0",
+		"nodemailer": "^6.6.0",
+		"passport": "^0.4.1",
+		"passport-jwt": "^4.0.0",
+		"pm2": "^4.5.6",
+		"swagger-jsdoc": "^7.0.0-rc.6",
+		"swagger-ui-express": "^4.1.6",
+		"validator": "^13.6.0",
+		"winston": "^3.3.3",
+		"xss-clean": "^0.1.1"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.13.16",
+		"@babel/core": "^7.14.2",
+		"@babel/node": "^7.14.2",
+		"@babel/preset-env": "^7.14.2",
+		"@babel/plugin-transform-modules-commonjs": "^7.14.0",
+		"nodemon": "^2.0.7"
+	}
+}
