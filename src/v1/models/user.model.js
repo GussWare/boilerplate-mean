@@ -3,7 +3,21 @@ import validator from "validator";
 import bcrypt from "bcryptjs";
 import * as paginationHelper from "../helpers/pagination.helper";
 import toJSONPlugin from "./plugins/toJSON.plugin";
-import loggerHelper from "../helpers/logger.helper";
+
+const imgSchema = new mongoose.Schema({
+	name: {
+		type: String,
+		required: true,
+	},
+	imgUrl: {
+		type: String,
+		required: true,
+	},
+	thumbnailUrl: {
+		type: String,
+		required: false,
+	},
+});
 
 const userSchema = new mongoose.Schema(
 	{
@@ -20,11 +34,9 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		picture: {
-			type: String,
-			trim: true,
-			required: false,
-		},
+
+		picture: imgSchema,
+
 		email: {
 			type: String,
 			required: true,

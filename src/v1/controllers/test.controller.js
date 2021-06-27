@@ -4,7 +4,7 @@ import loggerHelper from "../helpers/logger.helper";
 import fs from "fs-extra";
 
 export const testFs = catchAsyncHelper(async (req, res) => {
-	const path = constants.FOLDER_USERS + "/1";
+	const path = constants.FOLDERS.USERS + "/1";
 	await fs.ensureDirSync(path);
 
 	res.send({

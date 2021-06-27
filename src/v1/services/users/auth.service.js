@@ -11,7 +11,7 @@ export const loginUserWithEmailAndPassword = async (email, password) => {
 	const user = await userService.getUserByEmail(email);
 
 	if (!user) {
-		throw new Error();
+		throw new ApiError(httpStatus.UNAUTHORIZED, "User Not Found");
 	}
 
 	const isPasswordMatch = await user.isPasswordMatch(password);

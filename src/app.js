@@ -35,6 +35,9 @@ app.use("/api", rv1);
 app.use(passport.initialize());
 passport.use("jwt", jwtStrategy);
 
+app.use("/files", express.static("./src/v1/files", { redirect: false }));
+app.use("/assets", express.static("./src/v1/assets", { redirect: false }));
+
 // error 404
 app.use((req, res, next) => {
 	next(new ApiError(httpStatus.NOT_FOUND, "Api no encontrada"));

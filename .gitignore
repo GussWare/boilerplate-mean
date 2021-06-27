@@ -106,3 +106,7 @@ dist
 tmp/
 
 package-lock.json
+src/v1/files/
+src/v1/files/users/60b2b8445aa72bbe9a10853a/WhatsApp Image 2020-07-11 at 9.43.53 PM.jpeg
+src/v1/files/users/60b2b8a4f8b640bf6378e07b/WhatsApp Image 2020-07-11 at 9.43.53 PM.jpeg
+src/v1/files/users/60c64d3959b7133d0dc17486/apis.png

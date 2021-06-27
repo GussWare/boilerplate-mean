@@ -21,7 +21,7 @@ export const uploadUserPicture = catchAsyncHelper(async (req, res) => {
 	}
 
 	let file = req.files.file;
-	let uploadPath = `${constants.FOLDER_TEM}/${file.name}`;
+	let uploadPath = `${constants.FOLDERS.TEMP}/${file.name}`;
 
 	// Use the mv() method to place the file somewhere on your server
 	file.mv(uploadPath, (err) => {
