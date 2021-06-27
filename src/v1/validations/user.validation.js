@@ -41,6 +41,7 @@ export const updateUser = {
 			name: Joi.string().required(),
 			surname: Joi.string(),
 			username: Joi.string(),
+			picture: Joi.string(),
 			email: Joi.string().email(),
 			password: Joi.string().custom(password),
 			repeatPassword: Joi.any().valid(Joi.ref("password")).required(),

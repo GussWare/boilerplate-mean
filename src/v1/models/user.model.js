@@ -19,6 +19,8 @@ const imgSchema = new mongoose.Schema({
 	},
 });
 
+imgSchema.plugin(toJSONPlugin);
+
 const userSchema = new mongoose.Schema(
 	{
 		name: {

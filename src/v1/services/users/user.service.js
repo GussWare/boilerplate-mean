@@ -33,37 +33,41 @@ export const createUser = async (createBody) => {
 		throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
 	}
 
-	let userPicture= null;
+	let userPicture = null;
 	let imgName = await imgHelper.getWebNameNotImage();
 	let imgUrl = await imgHelper.getWebNotImage();
 	let thumbnailUrl = await imgHelper.getWebThumbnailNotImage();
 
-	if(createBody.picture) {
+	if (createBody.picture) {
 		userPicture = createBody.picture;
 	}
 
 	createBody.picture = {
-		name:imgName,
-		imgUrl:imgUrl,
-		thumbnailUrl:thumbnailUrl
-	};  
+		name: imgName,
+		imgUrl: imgUrl,
+		thumbnailUrl: thumbnailUrl,
+	};
 
 	let user = await UserModel.create(createBody);
 
 	if (userPicture) {
 		const fileUser = await userHelper.getFolderUserById(user.id);
-		const moveFile = await fileHelper.moveTempToDest(userPicture, fileUser, true);
-		
-		if(moveFile) {
-			 imgName = userPicture;
-			 imgUrl = await userHelper.getWebPictureUser(user.id, userPicture);
-			 thumbnailUrl = await userHelper.getWebPictureUser(user.id, userPicture);
+		const moveFile = await fileHelper.moveTempToDest(
+			userPicture,
+			fileUser,
+			true
+		);
+
+		if (moveFile) {
+			imgName = userPicture;
+			imgUrl = await userHelper.getWebPictureUser(user.id, userPicture);
+			thumbnailUrl = await userHelper.getWebPictureUser(user.id, userPicture);
 
 			user.picture = {
-				name:imgName,
-				imgUrl:imgUrl,
-				thumbnailUrl:thumbnailUrl
-			}
+				name: imgName,
+				imgUrl: imgUrl,
+				thumbnailUrl: thumbnailUrl,
+			};
 
 			await user.save();
 		}
@@ -85,20 +89,31 @@ export const updateUser = async (id, updateBody) => {
 		throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
 	}
 
-	if(updateBody.picture != user.picture.name) {
-		const fileUser = await userHelper.getFolderUserById(user.id);
-		const moveFile = await fileHelper.moveTempToDest(updateBody.picture, fileUser, true);
-		
-		if(moveFile) {
-			 imgName = updateBody.picture;
-			 imgUrl = await userHelper.getWebPictureUser(user.id, updateBody.picture);
-			 thumbnailUrl = await userHelper.getWebPictureUser(user.id, updateBody.picture);
+	let imgName = null;
+	let imgUrl = null;
+	let thumbnailUrl = null;
 
-			 updateBody.picture = {
-				name:imgName,
-				imgUrl:imgUrl,
-				thumbnailUrl:thumbnailUrl
-			}
+	if (updateBody.picture && updateBody.picture != user.picture.name) {
+		const fileUser = await userHelper.getFolderUserById(user.id);
+		const moveFile = await fileHelper.moveTempToDest(
+			updateBody.picture,
+			fileUser,
+			true
+		);
+
+		if (moveFile) {
+			imgName = updateBody.picture;
+			imgUrl = await userHelper.getWebPictureUser(user.id, updateBody.picture);
+			thumbnailUrl = await userHelper.getWebPictureUser(
+				user.id,
+				updateBody.picture
+			);
+
+			updateBody.picture = {
+				name: imgName,
+				imgUrl: imgUrl,
+				thumbnailUrl: thumbnailUrl,
+			};
 		}
 	}
 
