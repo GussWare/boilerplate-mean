@@ -7,7 +7,7 @@ export const search = (searchOption, columns) => {
 
 	columns.forEach((column) => {
 		let item = {};
-		item[column] = { $regex: searchOption };
+		item[column] = { $regex: searchOption, $options: "i" };
 		searchOr.push(item);
 	});
 
