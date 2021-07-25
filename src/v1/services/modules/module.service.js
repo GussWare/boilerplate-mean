@@ -45,7 +45,9 @@ export const deleteModule = async (id) => {
 		return null;
 	}
 
-	await ModuleModel.remove();
+	await ModuleModel.remove({
+		_id: id
+	});
 
 	return module;
 };

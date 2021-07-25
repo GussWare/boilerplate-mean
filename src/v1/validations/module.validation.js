@@ -3,6 +3,10 @@ import { password, objectId } from "./custom.validation";
 
 export const getPaginate = {
 	query: Joi.object().keys({
+		name: Joi.string(),
+		slug: Joi.string(),
+		guard: Joi.string(),
+		search: Joi.string(),
 		page: Joi.number().integer().required(),
 		limit: Joi.number().integer().required(),
 		sortBy: Joi.string().required(),

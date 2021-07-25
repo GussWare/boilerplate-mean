@@ -7,6 +7,16 @@ roleRights.set(roles[0], [
 	"createUser",
 	"updateUser",
 	"deleteUser",
+	"enabledUser",
+	"disabledUser",
+
+	"getModules",
+	"getModuleById",
+	"createModule",
+	"updateModule",
+	"deleteModule",
+	"enabledModule",
+	"disabledModule",
 ]);
 
 export { roles, roleRights };

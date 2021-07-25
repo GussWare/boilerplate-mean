@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import * as paginationHelper from "../helpers/pagination.helper";
 import toJSONPlugin from "./plugins/toJSON.plugin";
 
 const moduleSchema = new mongoose.Schema(
@@ -62,7 +63,7 @@ moduleSchema.statics.paginate = async function (filter = {}, options = {}) {
 	// busqueda por search
 	if (options.search) {
 		// en columnas debe ser puros tipos strings, si hay otor tipo de busqueda ponerlo aparte
-		const columns = ["name", "slug"];
+		const columns = ["name", "slug", "guard"];
 		searchFilter = paginationHelper.search(options.search, columns);
 
 		if (searchFilter.length > 0) {
