@@ -14,11 +14,7 @@ const moduleSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		guard: {
-			type: String,
-			required: true,
-			trim: true,
-		},
+
 		description: {
 			type: String,
 			required: true,
