@@ -1,0 +1,1 @@
+import ModuleModel from "../../models/bitacora.model";
