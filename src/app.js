@@ -4,11 +4,13 @@ import compression from "compression";
 import cors from "cors";
 import morgan from "morgan";
 import mongoSanitize from "express-mongo-sanitize";
+import createLocaleMiddleware from 'express-locale'
 import httpStatus from "http-status";
 import jwtStrategy from "./v1/config/password.config";
 import passport from "passport";
 import config from "./v1/config/vars.config";
 import constants from "./v1/config/constants.config";
+import {loadPolyglot} from "./v1/middlewares/language.middelware";
 import {
 	errorConverter,
 	errorHandler,
@@ -24,6 +26,12 @@ app.use(helmet());
 app.use(compression());
 app.use(cors());
 app.use(mongoSanitize());
+app.use(createLocaleMiddleware({
+	"priority": ["accept-language", "default"],
+    "default": "es_Es"
+}));
+
+app.use(loadPolyglot);
 
 if (config.env == constants.NODE_ENV_DEVELOPER) {
 	app.use(morgan("dev"));
