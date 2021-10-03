@@ -8,32 +8,38 @@ const router = express.Router();
 
 router.get(
 	"/users",
-	[auth("getUsers"), validateMiddleware(userValidation.getPaginate)],
+	[auth("users_get_all"), validateMiddleware(userValidation.getPaginate)],
 	UserController.getPaginate
 );
 
 router.get(
 	"/users/:userId",
-	[auth("getUserById"), validateMiddleware(userValidation.getUserById)],
+	[auth("users_get_by_id"), validateMiddleware(userValidation.userById)],
 	UserController.getUserById
 );
 
 router.post(
 	"/users",
-	[auth("createUser"), validateMiddleware(userValidation.createUser)],
+	[auth("users_create"), validateMiddleware(userValidation.createUser)],
 	UserController.createUser
 );
 
 router.put(
 	"/users/:userId",
-	[auth("updateUser"), validateMiddleware(userValidation.updateUser)],
+	[auth("users_update"), validateMiddleware(userValidation.updateUser)],
 	UserController.updateUser
 );
 
 router.delete(
 	"/users/:userId",
-	[auth("deleteUser"), validateMiddleware(userValidation.deleteUser)],
+	[auth("users_delete"), validateMiddleware(userValidation.deleteUser)],
 	UserController.deleteUser
+);
+
+router.patch(
+	"/users/:userId",
+	[auth("users_patch"), validateMiddleware(userValidation.userById)],
+	UserController.updateUser
 );
 
 export default router;

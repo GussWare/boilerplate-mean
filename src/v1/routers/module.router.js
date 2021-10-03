@@ -8,37 +8,37 @@ const router = express.Router();
 
 router.get(
 	"/modules",
-	[auth("getModules"), validateMiddleware(moduleValidation.getPaginate)],
+	[auth("modules_get_all"), validateMiddleware(moduleValidation.getPaginate)],
 	ModuleController.getPaginate
 );
 
 router.get(
 	"/modules/:moduleId",
-	[auth("getModuleById"), validateMiddleware(moduleValidation.getModuleById)],
+	[auth("modules_get_by_id"), validateMiddleware(moduleValidation.getModuleById)],
 	ModuleController.getModuleById
 );
 
 router.post(
 	"/modules",
-	[auth("createModule"), validateMiddleware(moduleValidation.createModule)],
+	[auth("modules_create"), validateMiddleware(moduleValidation.createModule)],
 	ModuleController.createModule
 );
 
 router.put(
 	"/modules/:moduleId",
-	[auth("updateModule"), validateMiddleware(moduleValidation.updateModule)],
+	[auth("modules_update"), validateMiddleware(moduleValidation.updateModule)],
 	ModuleController.updateModule
 );
 
 router.delete(
 	"/modules/:moduleId",
-	[auth("deleteModule"), validateMiddleware(moduleValidation.deleteModule)],
+	[auth("modules_delete"), validateMiddleware(moduleValidation.deleteModule)],
 	ModuleController.deleteModule
 );
 
 router.patch(
 	"/modules/:moduleId",
-	[auth("enabledModule"), validateMiddleware(moduleValidation.getModuleById)],
+	[auth("modules_update"), validateMiddleware(moduleValidation.getModuleById)],
 	ModuleController.updateModule
 );
 
