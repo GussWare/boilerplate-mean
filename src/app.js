@@ -48,7 +48,7 @@ app.use("/assets", express.static("./src/v1/assets", { redirect: false }));
 
 // error 404
 app.use((req, res, next) => {
-	next(new ApiError(httpStatus.NOT_FOUND, "Api no encontrada"));
+	next(new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_API_NOT_FOUND")));
 });
 
 // convert error to ApiError, if needed
