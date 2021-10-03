@@ -15,7 +15,7 @@ export const moduleInitFaker = async () => {
 	if (userModule) {
 		await actionService.createAction({
 			name: "Listado de Usuarios",
-			slug: "users-list",
+			slug: "users_list",
 			guard: "",
 			description: "Listado de usuarios",
 			module: userModule.id
@@ -23,7 +23,7 @@ export const moduleInitFaker = async () => {
 
 		await actionService.createAction({
 			name: "Crear Usuario",
-			slug: "users-create",
+			slug: "users_create",
 			guard: "",
 			description: "Crear un nuevo usuario",
 			module: userModule.id
@@ -31,7 +31,7 @@ export const moduleInitFaker = async () => {
 
 		await actionService.createAction({
 			name: "Actualizar Usuario",
-			slug: "users-update",
+			slug: "users_update",
 			guard: "",
 			description: "Actualizar usuario",
 			module: userModule.id
@@ -39,25 +39,17 @@ export const moduleInitFaker = async () => {
 
 		await actionService.createAction({
 			name: "Eliminar Usuario",
-			slug: "users-delete",
+			slug: "users_delete",
 			guard: "",
 			description: "Actualizar usuario",
 			module: userModule.id
 		});
 
 		await actionService.createAction({
-			name: "Habilitar Usuario",
-			slug: "users-enabled",
+			name: "Editar Usuario",
+			slug: "users_patch",
 			guard: "",
-			description: "Habilitar usuario",
-			module: userModule.id
-		});
-
-		await actionService.createAction({
-			name: "Deshabilitar Usuario",
-			slug: "users-disabled",
-			guard: "",
-			description: "Deshabilitar usuario",
+			description: "Editar usuario",
 			module: userModule.id
 		});
 	}

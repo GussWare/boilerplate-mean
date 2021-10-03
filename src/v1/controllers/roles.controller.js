@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 import catchAsyncHelper from "../helpers/catch.async.helper";
-import * as userService from "../services/users/user.service";
+import * as roleService from "../services/roles/roles.service";
 import ApiError from "../libraries/api.error.library";
 import pickHelper from "../helpers/pick.helper";
 
@@ -8,47 +8,47 @@ export const getPaginate = catchAsyncHelper(async (req, res) => {
 	const filter = pickHelper(req.query, []);
 	const options = pickHelper(req.query, ["sortBy", "limit", "page"]);
 
-	const response = await userService.getPaginate(filter, options);
+	const response = await roleService.getPaginate(filter, options);
 
 	res.send(response);
 });
 
-export const getUsers = catchAsyncHelper(async (req, res) => {
-	const users = await userService.getUsers();
-	res.send({ users });
+export const getRoles = catchAsyncHelper(async (req, res) => {
+	const roles = await roleService.getRoles();
+	res.send({ roles });
 });
 
-export const getUserById = catchAsyncHelper(async (req, res) => {
-	const user = await userService.getUserById(req.params.userId);
+export const getRoleById = catchAsyncHelper(async (req, res) => {
+	const role = await roleService.getRoleById(req.params.roleId);
 
-	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+	if (!role) {
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_NOT_FOUND"));
 	}
 
-	res.send({ user });
+	res.send({ role });
 });
 
-export const createUser = catchAsyncHelper(async (req, res) => {
-	const user = await userService.createUser(req.body);
-	res.send({ user });
+export const createRole = catchAsyncHelper(async (req, res) => {
+	const role = await roleService.createRole(req.body);
+	res.send({ role });
 });
 
-export const updateUser = catchAsyncHelper(async (req, res) => {
-	const user = await userService.updateUser(req.params.userId, req.body);
+export const updateRole = catchAsyncHelper(async (req, res) => {
+	const role = await roleService.updateRole(req.params.roleId, req.body);
 
-	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+	if (!role) {
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_NOT_FOUND"));
 	}
 
-	res.send({ user });
+	res.send({ role });
 });
 
-export const deleteUser = catchAsyncHelper(async (req, res) => {
-	const user = await userService.deleteUser(req.params.userId);
+export const deleteRole = catchAsyncHelper(async (req, res) => {
+	const role = await roleService.deleteRole(req.params.roleId);
 
-	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, "Registro no encontrado");
+	if (!role) {
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_NOT_FOUND"));
 	}
 
-	res.send({ user });
+	res.send({ role });
 });

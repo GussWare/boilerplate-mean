@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get(
 	"/modules",
-	[auth("modules_get_all"), validateMiddleware(moduleValidation.getPaginate)],
+	[auth("modules_list"), validateMiddleware(moduleValidation.getPaginate)],
 	ModuleController.getPaginate
 );
 
