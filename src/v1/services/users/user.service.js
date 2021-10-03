@@ -4,8 +4,6 @@ import ApiError from "../../libraries/api.error.library";
 import * as fileHelper from "../../helpers/file.helper";
 import * as userHelper from "../../helpers/userHelper";
 import * as imgHelper from "../../helpers/img.helper";
-import constants from "../../config/constants.config";
-import config from "../../config/vars.config";
 import loggerHelper from "../../helpers/logger.helper";
 
 export const getPaginate = async (filter, options) => {
@@ -30,7 +28,7 @@ export const getUserByEmail = async (email) => {
 
 export const createUser = async (createBody) => {
 	if (await UserModel.isEmailTaken(createBody.email)) {
-		throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
+		throw new ApiError(httpStatus.BAD_REQUEST, global.polyglot.t("USERS_ERROR_EMAIL_ALREADY_TAKEN"));
 	}
 
 	let userPicture = null;
@@ -86,7 +84,7 @@ export const updateUser = async (id, updateBody) => {
 	const isEmailTaken = await UserModel.isEmailTaken(updateBody.email, id);
 
 	if (updateBody.email && isEmailTaken) {
-		throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
+		throw new ApiError(httpStatus.BAD_REQUEST, global.polyglot.t("USERS_ERROR_EMAIL_ALREADY_TAKEN"));
 	}
 
 	let imgName = null;
@@ -130,7 +128,9 @@ export const deleteUser = async (id) => {
 		return null;
 	}
 
-	await UserModel.remove();
+	await UserModel.remove({
+		_id: id
+	});
 
 	return user;
 };

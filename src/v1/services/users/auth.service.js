@@ -10,14 +10,20 @@ import loggerHelper from "../../helpers/logger.helper";
 export const loginUserWithEmailAndPassword = async (email, password) => {
 	const user = await userService.getUserByEmail(email);
 
-	if (!user) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, "User Not Found");
+	if (!user || !user.enabled) {
+		throw new ApiError(
+			httpStatus.UNAUTHORIZED,
+			global.polyglot.t("USERS_ERROR_USER_NOT_FOUND")
+		);
 	}
 
 	const isPasswordMatch = await user.isPasswordMatch(password);
 
 	if (!user || !isPasswordMatch) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email or password");
+		throw new ApiError(
+			httpStatus.UNAUTHORIZED,
+			global.polyglot.t("USERS_ERROR_INCORRECT_EMAIL_AND_OR_PASSWORD")
+		);
 	}
 
 	return user;
@@ -31,7 +37,10 @@ export const logout = async (refreshToken) => {
 	});
 
 	if (!refreshTokenDoc) {
-		throw new ApiError(httpStatus.NOT_FOUND, "Not found");
+		throw new ApiError(
+			httpStatus.NOT_FOUND,
+			global.polyglot.t("GENERAL_ERROR_NOT_FOUND")
+		);
 	}
 
 	await refreshTokenDoc.remove();
@@ -46,14 +55,17 @@ export const refreshAuth = async (refreshToken) => {
 
 		const user = await userService.getUserById(refreshTokenDoc.user);
 
-		if (!user) {
+		if (!user || !user.enabled) {
 			throw new Error();
 		}
 
 		await refreshTokenDoc.remove();
 		return tokenService.generateAuthTokens(user);
 	} catch (error) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, "Please authenticate");
+		throw new ApiError(
+			httpStatus.UNAUTHORIZED,
+			global.polyglot.t("AUTH_ERROR_PLEASE_AUTHENTICATE")
+		);
 	}
 };
 
@@ -66,7 +78,7 @@ export const resetPassword = async (resetPasswordToken, newPassword) => {
 
 		const user = await userService.getUserById(resetPasswordTokenDoc.user);
 
-		if (!user) {
+		if (!user || !user.enabled) {
 			throw new Error();
 		}
 
@@ -79,7 +91,10 @@ export const resetPassword = async (resetPasswordToken, newPassword) => {
 			type: constants.TOKEN.TYPE_RESET_PASSWORD,
 		});
 	} catch (error) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, "Password reset failed");
+		throw new ApiError(
+			httpStatus.UNAUTHORIZED,
+			global.polyglot.t("AUTH_ERROR_PASSWORD_RESET_FAILED")
+		);
 	}
 };
 
@@ -92,7 +107,7 @@ export const verifyEmail = async (verifyEmailToken) => {
 
 		const user = await userService.getUserById(verifyEmailTokenDoc.user);
 
-		if (!user) {
+		if (!user || !user.enabled) {
 			throw new Error();
 		}
 
@@ -103,6 +118,9 @@ export const verifyEmail = async (verifyEmailToken) => {
 
 		await userService.updateUser(user.id, { isEmailVerified: true });
 	} catch (error) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, "Email verification failed");
+		throw new ApiError(
+			httpStatus.UNAUTHORIZED,
+			global.polyglot.t("AUTH_ERROR_EMAIL_VERIFICATION_FAILED")
+		);
 	}
 };

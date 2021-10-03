@@ -1,7 +1,9 @@
 
 {
-    "GENERAL_ERROR_NOT_FOUND":"No encontrado.",
+    "GENERAL_ERROR_NOT_FOUND":"Registro No encontrado.",
+    "GENERAL_ERROR_API_NOT_FOUND":"Api no encontrada.",
 
+    "USERS_ERROR_EMAIL_ALREADY_TAKEN":"Correo electrónico ya tomado.",
     "USERS_ERROR_USER_NOT_FOUND":"Usuario no encontrado.",
     "USERS_ERROR_INCORRECT_EMAIL_AND_OR_PASSWORD":"Coreo electrónico y/o contraseña incorrectos.",
 

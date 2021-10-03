@@ -23,7 +23,7 @@ export const getModuleById = catchAsyncHelper(async (req, res) => {
 	const modulee = await moduleService.getModuleById(req.params.moduleId);
 
 	if (!modulee) {
-		throw new ApiError(httpStatus.NOT_FOUND, "Module not found");
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_NOT_FOUND"));
 	}
 
 	res.send({ module:modulee });
@@ -41,7 +41,7 @@ export const updateModule = catchAsyncHelper(async (req, res) => {
 	);
 
 	if (!modulee) {
-		throw new ApiError(httpStatus.NOT_FOUND, "Module not found");
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_NOT_FOUND"));
 	}
 
 	res.send({ module: modulee });
@@ -51,7 +51,7 @@ export const deleteModule = catchAsyncHelper(async (req, res) => {
 	const modulee = await moduleService.deleteModule(req.params.moduleId);
 
 	if (!modulee) {
-		throw new ApiError(httpStatus.NOT_FOUND, "Registro no encontrado");
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_NOT_FOUND"));
 	}
 
 	res.send({ module: modulee });

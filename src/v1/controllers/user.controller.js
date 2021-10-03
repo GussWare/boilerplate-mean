@@ -23,7 +23,7 @@ export const getUserById = catchAsyncHelper(async (req, res) => {
 	const user = await userService.getUserById(req.params.userId);
 
 	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("USERS_ERROR_USER_NOT_FOUND"));
 	}
 
 	res.send({ user });
@@ -38,7 +38,7 @@ export const updateUser = catchAsyncHelper(async (req, res) => {
 	const user = await userService.updateUser(req.params.userId, req.body);
 
 	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("USERS_ERROR_USER_NOT_FOUND"));
 	}
 
 	res.send({ user });
@@ -48,7 +48,7 @@ export const deleteUser = catchAsyncHelper(async (req, res) => {
 	const user = await userService.deleteUser(req.params.userId);
 
 	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, "Registro no encontrado");
+		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_NOT_FOUND"));
 	}
 
 	res.send({ user });
