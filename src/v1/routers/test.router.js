@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.post("/test-fs", TestController.testFs);
 router.get("/test/faker", TestController.faker);
+router.get("/test/polyglot", TestController.polyglot);
 
 export default router;

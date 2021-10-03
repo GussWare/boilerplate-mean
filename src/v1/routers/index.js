@@ -1,7 +1,10 @@
 import express from "express";
 import userRoute from "./user.rooter";
+import moduleRoute from "./module.router";
+import actionRoute from "./actions.router";
 import authRoute from "./auth.router";
 import testRoute from "./test.router";
+import gonetRouter from "./gonet.router";
 import config from "../config/vars.config";
 import constants from "../config/vars.config";
 
@@ -18,7 +21,15 @@ const defaultRoutes = [
 	},
 	{
 		path: "/v1",
+		route: moduleRoute,
+	},
+	{
+		path: "/v1",
 		route: testRoute,
+	},
+	{
+		path: "/v1",
+		route: gonetRouter,
 	},
 ];
 
