@@ -5,7 +5,7 @@ export const getPaginate = {
 	query: Joi.object().keys({
 		name: Joi.string(),
 		surname: Joi.string(),
-		email: Joi.string(),
+		email: Joi.string().email(),
 		username: Joi.string(),
 		search: Joi.string(),
 		page: Joi.number().integer().required(),

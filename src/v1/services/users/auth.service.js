@@ -7,7 +7,7 @@ import constants from "../../config/constants.config";
 import config from "../../config/vars.config";
 import loggerHelper from "../../helpers/logger.helper";
 
-export const loginUserWithEmailAndPassword = async (email, password) => {
+export const login = async (email, password) => {
 	const user = await userService.getUserByEmail(email);
 
 	if (!user || !user.enabled) {
@@ -19,7 +19,7 @@ export const loginUserWithEmailAndPassword = async (email, password) => {
 
 	const isPasswordMatch = await user.isPasswordMatch(password);
 
-	if (!user || !isPasswordMatch) {
+	if (!isPasswordMatch) {
 		throw new ApiError(
 			httpStatus.UNAUTHORIZED,
 			global.polyglot.t("USERS_ERROR_INCORRECT_EMAIL_AND_OR_PASSWORD")

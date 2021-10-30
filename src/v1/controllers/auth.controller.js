@@ -35,7 +35,7 @@ export const uploadUserPicture = catchAsyncHelper(async (req, res) => {
 
 export const login = catchAsyncHelper(async (req, res) => {
 	const { email, password } = req.body;
-	const user = await authService.loginUserWithEmailAndPassword(email, password);
+	const user = await authService.login(email, password);
 	const tokens = await tokenService.generateAuthTokens(user);
 
 	res.send({ user, tokens });

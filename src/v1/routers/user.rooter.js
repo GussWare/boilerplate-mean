@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get(
 	"/users",
-	[auth("user_list"), validateMiddleware(userValidation.getPaginate)],
+	[auth("users_list"), validateMiddleware(userValidation.getPaginate)],
 	UserController.getPaginate
 );
 

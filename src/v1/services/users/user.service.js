@@ -2,7 +2,7 @@ import httpStatus from "http-status";
 import UserModel from "../../models/user.model";
 import ApiError from "../../libraries/api.error.library";
 import * as fileHelper from "../../helpers/file.helper";
-import * as userHelper from "../../helpers/userHelper";
+import * as userHelper from "../../helpers/user.helper";
 import * as imgHelper from "../../helpers/img.helper";
 import loggerHelper from "../../helpers/logger.helper";
 
