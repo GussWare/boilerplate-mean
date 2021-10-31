@@ -11,23 +11,23 @@ export const getPaginate = async (filter, options) => {
 	return pagination;
 };
 
-export const getUsers = async () => {
+export const getAll = async () => {
 	const users = await UserModel.find();
 	return users;
 };
 
-export const getUserById = async (id) => {
+export const getById = async (id) => {
 	const user = await UserModel.findById(id);
 	return user;
 };
 
-export const getUserByEmail = async (email) => {
+export const getByEmail = async (email) => {
 	const user = await UserModel.findOne({ email: email });
 	return user;
 };
 
-export const createUser = async (createBody) => {
-	if (await UserModel.isEmailTaken(createBody.email)) {
+export const create = async (body) => {
+	if (await UserModel.isEmailTaken(body.email)) {
 		throw new ApiError(httpStatus.BAD_REQUEST, global.polyglot.t("USERS_ERROR_EMAIL_ALREADY_TAKEN"));
 	}
 
@@ -36,17 +36,17 @@ export const createUser = async (createBody) => {
 	let imgUrl = await imgHelper.getWebNotImage();
 	let thumbnailUrl = await imgHelper.getWebThumbnailNotImage();
 
-	if (createBody.picture) {
-		userPicture = createBody.picture;
+	if (body.picture) {
+		userPicture = body.picture;
 	}
 
-	createBody.picture = {
+	body.picture = {
 		name: imgName,
 		imgUrl: imgUrl,
 		thumbnailUrl: thumbnailUrl,
 	};
 
-	let user = await UserModel.create(createBody);
+	let user = await UserModel.create(body);
 
 	if (userPicture) {
 		const fileUser = await userHelper.getFolderUserById(user.id);
@@ -74,16 +74,16 @@ export const createUser = async (createBody) => {
 	return user;
 };
 
-export const updateUser = async (id, updateBody) => {
-	const user = await getUserById(id);
+export const update = async (id, body) => {
+	const user = await getById(id);
 
 	if (!user) {
 		return null;
 	}
 
-	const isEmailTaken = await UserModel.isEmailTaken(updateBody.email, id);
+	const isEmailTaken = await UserModel.isEmailTaken(body.email, id);
 
-	if (updateBody.email && isEmailTaken) {
+	if (body.email && isEmailTaken) {
 		throw new ApiError(httpStatus.BAD_REQUEST, global.polyglot.t("USERS_ERROR_EMAIL_ALREADY_TAKEN"));
 	}
 
@@ -91,23 +91,23 @@ export const updateUser = async (id, updateBody) => {
 	let imgUrl = null;
 	let thumbnailUrl = null;
 
-	if (updateBody.picture && updateBody.picture != user.picture.name) {
+	if (body.picture && body.picture != user.picture.name) {
 		const fileUser = await userHelper.getFolderUserById(user.id);
 		const moveFile = await fileHelper.moveTempToDest(
-			updateBody.picture,
+			body.picture,
 			fileUser,
 			true
 		);
 
 		if (moveFile) {
-			imgName = updateBody.picture;
-			imgUrl = await userHelper.getWebPictureUser(user.id, updateBody.picture);
+			imgName = body.picture;
+			imgUrl = await userHelper.getWebPictureUser(user.id, body.picture);
 			thumbnailUrl = await userHelper.getWebPictureUser(
 				user.id,
-				updateBody.picture
+				body.picture
 			);
 
-			updateBody.picture = {
+			body.picture = {
 				name: imgName,
 				imgUrl: imgUrl,
 				thumbnailUrl: thumbnailUrl,
@@ -115,14 +115,14 @@ export const updateUser = async (id, updateBody) => {
 		}
 	}
 
-	Object.assign(user, updateBody);
+	Object.assign(user, body);
 
 	const userUpdated = await user.save();
 	return userUpdated;
 };
 
-export const deleteUser = async (id) => {
-	const user = await getUserById(id);
+export const remove = async (id) => {
+	const user = await getById(id);
 
 	if (!user) {
 		return null;

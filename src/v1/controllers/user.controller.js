@@ -14,13 +14,13 @@ export const getPaginate = catchAsyncHelper(async (req, res) => {
 	res.send(response);
 });
 
-export const getUsers = catchAsyncHelper(async (req, res) => {
-	const users = await userService.getUsers();
+export const getAll = catchAsyncHelper(async (req, res) => {
+	const users = await userService.getAll();
 	res.send({ users });
 });
 
-export const getUserById = catchAsyncHelper(async (req, res) => {
-	const user = await userService.getUserById(req.params.userId);
+export const getById = catchAsyncHelper(async (req, res) => {
+	const user = await userService.getById(req.params.userId);
 
 	if (!user) {
 		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("USERS_ERROR_USER_NOT_FOUND"));
@@ -29,13 +29,13 @@ export const getUserById = catchAsyncHelper(async (req, res) => {
 	res.send({ user });
 });
 
-export const createUser = catchAsyncHelper(async (req, res) => {
-	const user = await userService.createUser(req.body);
+export const create = catchAsyncHelper(async (req, res) => {
+	const user = await userService.create(req.body);
 	res.send({ user });
 });
 
-export const updateUser = catchAsyncHelper(async (req, res) => {
-	const user = await userService.updateUser(req.params.userId, req.body);
+export const update = catchAsyncHelper(async (req, res) => {
+	const user = await userService.update(req.params.userId, req.body);
 
 	if (!user) {
 		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("USERS_ERROR_USER_NOT_FOUND"));
@@ -44,8 +44,8 @@ export const updateUser = catchAsyncHelper(async (req, res) => {
 	res.send({ user });
 });
 
-export const deleteUser = catchAsyncHelper(async (req, res) => {
-	const user = await userService.deleteUser(req.params.userId);
+export const remove = catchAsyncHelper(async (req, res) => {
+	const user = await userService.remove(req.params.userId);
 
 	if (!user) {
 		throw new ApiError(httpStatus.NOT_FOUND, global.polyglot.t("GENERAL_ERROR_NOT_FOUND"));

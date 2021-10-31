@@ -8,38 +8,38 @@ const router = express.Router();
 
 router.get(
 	"/users",
-	[auth("users_list"), validateMiddleware(userValidation.getPaginate)],
+	[auth("users_paginate"), validateMiddleware(userValidation.getPaginate)],
 	UserController.getPaginate
 );
 
 router.get(
 	"/users/:userId",
-	[auth("users_get_by_id"), validateMiddleware(userValidation.userById)],
-	UserController.getUserById
+	[auth("users_get_by_id"), validateMiddleware(userValidation.getById)],
+	UserController.getById
 );
 
 router.post(
 	"/users",
-	[auth("users_create"), validateMiddleware(userValidation.createUser)],
-	UserController.createUser
+	[auth("users_create"), validateMiddleware(userValidation.create)],
+	UserController.create
 );
 
 router.put(
 	"/users/:userId",
-	[auth("users_update"), validateMiddleware(userValidation.updateUser)],
-	UserController.updateUser
+	[auth("users_update"), validateMiddleware(userValidation.update)],
+	UserController.update
 );
 
 router.delete(
 	"/users/:userId",
-	[auth("users_delete"), validateMiddleware(userValidation.deleteUser)],
-	UserController.deleteUser
+	[auth("users_delete"), validateMiddleware(userValidation.remove)],
+	UserController.remove
 );
 
 router.patch(
 	"/users/:userId",
-	[auth("users_patch"), validateMiddleware(userValidation.userById)],
-	UserController.updateUser
+	[auth("users_patch"), validateMiddleware(userValidation.getById)],
+	UserController.update
 );
 
 export default router;

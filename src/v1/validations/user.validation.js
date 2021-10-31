@@ -14,13 +14,13 @@ export const getPaginate = {
 	}),
 };
 
-export const getUserById = {
+export const getById = {
 	params: Joi.object().keys({
 		userId: Joi.string().custom(objectId),
 	}),
 };
 
-export const createUser = {
+export const create = {
 	body: Joi.object().keys({
 		name: Joi.string().required(),
 		surname: Joi.string(),
@@ -32,7 +32,7 @@ export const createUser = {
 	}),
 };
 
-export const updateUser = {
+export const update = {
 	params: Joi.object().keys({
 		userId: Joi.required().custom(objectId),
 	}),
@@ -49,7 +49,7 @@ export const updateUser = {
 		.min(1),
 };
 
-export const deleteUser = {
+export const remove = {
 	params: Joi.object().keys({
 		userId: Joi.string().required().custom(objectId),
 	}),
