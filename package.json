@@ -58,6 +58,7 @@
 		"@babel/plugin-transform-modules-commonjs": "^7.14.0",
 		"@babel/preset-env": "^7.14.2",
 		"faker": "^5.5.3",
+		"git-commit-msg-linter": "^4.0.7",
 		"nodemon": "^2.0.7"
 	}
 }
