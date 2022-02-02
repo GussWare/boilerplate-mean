@@ -1,10 +1,7 @@
 import httpStatus from "http-status";
 import UserModel from "../../models/user.model";
 import ApiError from "../../libraries/api.error.library";
-import * as fileHelper from "../../helpers/file.helper";
-import * as userHelper from "../../helpers/user.helper";
-import * as imgHelper from "../../helpers/img.helper";
-import loggerHelper from "../../helpers/logger.helper";
+import * as userFileService from "./user.files.service";
 
 export const getPaginate = async (filter, options) => {
 	const pagination = await UserModel.paginate(filter, options);
@@ -31,45 +28,24 @@ export const create = async (body) => {
 		throw new ApiError(httpStatus.BAD_REQUEST, global.polyglot.t("USERS_ERROR_EMAIL_ALREADY_TAKEN"));
 	}
 
-	let userPicture = null;
-	let imgName = await imgHelper.getWebNameNotImage();
-	let imgUrl = await imgHelper.getWebNotImage();
-	let thumbnailUrl = await imgHelper.getWebThumbnailNotImage();
-
-	if (body.picture) {
-		userPicture = body.picture;
-	}
-
-	body.picture = {
-		name: imgName,
-		imgUrl: imgUrl,
-		thumbnailUrl: thumbnailUrl,
-	};
+	let userPicture = (body.picture) ? body.picture : null;
+	body.picture = await userFileService.getUserNotPicture();
 
 	let user = await UserModel.create(body);
 
-	if (userPicture) {
-		const fileUser = await userHelper.getFolderUserById(user.id);
-		const moveFile = await fileHelper.moveTempToDest(
-			userPicture,
-			fileUser,
-			true
-		);
-
-		if (moveFile) {
-			imgName = userPicture;
-			imgUrl = await userHelper.getWebPictureUser(user.id, userPicture);
-			thumbnailUrl = await userHelper.getWebPictureUser(user.id, userPicture);
-
-			user.picture = {
-				name: imgName,
-				imgUrl: imgUrl,
-				thumbnailUrl: thumbnailUrl,
-			};
-
-			await user.save();
-		}
+	if (!userPicture) {
+		return user;
 	}
+
+	const moveUserPicture = await userFileService.moveTempToDestUserPicture(user.id, userPicture);
+
+	if (!moveUserPicture) {
+		return user;
+	}
+
+	user.picture = moveUserPicture;
+
+	await user.save();
 
 	return user;
 };
@@ -87,31 +63,11 @@ export const update = async (id, body) => {
 		throw new ApiError(httpStatus.BAD_REQUEST, global.polyglot.t("USERS_ERROR_EMAIL_ALREADY_TAKEN"));
 	}
 
-	let imgName = null;
-	let imgUrl = null;
-	let thumbnailUrl = null;
-
 	if (body.picture && body.picture != user.picture.name) {
-		const fileUser = await userHelper.getFolderUserById(user.id);
-		const moveFile = await fileHelper.moveTempToDest(
-			body.picture,
-			fileUser,
-			true
-		);
+		const moveUserPicture =  await userFileService.moveTempToDestUserPicture(id, body.picture);
 
-		if (moveFile) {
-			imgName = body.picture;
-			imgUrl = await userHelper.getWebPictureUser(user.id, body.picture);
-			thumbnailUrl = await userHelper.getWebPictureUser(
-				user.id,
-				body.picture
-			);
-
-			body.picture = {
-				name: imgName,
-				imgUrl: imgUrl,
-				thumbnailUrl: thumbnailUrl,
-			};
+		if(moveUserPicture) {
+			body.picture = moveUserPicture;
 		}
 	}
 
